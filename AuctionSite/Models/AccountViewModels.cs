@@ -65,6 +65,10 @@ namespace AuctionSite.Models
     public class RegisterViewModel
     {
         [Required]
+        [StringLength(25, MinimumLength = 3, ErrorMessage = "Username must be between {1} and {0} characters long.")]
+        public string Username { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
