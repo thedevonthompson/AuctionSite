@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -16,6 +17,8 @@ namespace AuctionSite.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public ICollection<Bid> Bids { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -29,5 +32,8 @@ namespace AuctionSite.Models
         {
             return new ApplicationDbContext();
         }
+
+        public virtual DbSet<AuctionItem> AuctionItems { get; set; }
+        public virtual DbSet<Bid> Bids { get; set; }
     }
 }
