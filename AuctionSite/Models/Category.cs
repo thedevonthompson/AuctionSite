@@ -9,5 +9,7 @@ namespace AuctionSite.Models
     {
         public int CategoryID { get; set; }
         public string Name { get; set; }
+
+        public virtual ICollection<AuctionItem> AuctionItems { get; set; }
     }
 }
