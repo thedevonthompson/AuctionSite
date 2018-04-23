@@ -12,6 +12,8 @@ namespace AuctionSite.Models
         public string Description { get; set; }
         public decimal MinPrice { get; set; }
 
-        public ICollection<Bid> Bids { get; set; }
+        public virtual Category Category { get; set; }
+        public virtual ICollection<ItemImage> Images { get; set; }
+        public virtual ICollection<Bid> Bids { get; set; }
     }
 }

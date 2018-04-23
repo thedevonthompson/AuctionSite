@@ -203,11 +203,17 @@
     <Compile Include="Migrations\201804190414043_AuctionItemsAndBids.Designer.cs">
       <DependentUpon>201804190414043_AuctionItemsAndBids.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804232025461_AuctionItemImagesAndCategories.cs" />
+    <Compile Include="Migrations\201804232025461_AuctionItemImagesAndCategories.Designer.cs">
+      <DependentUpon>201804232025461_AuctionItemImagesAndCategories.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AuctionItem.cs" />
     <Compile Include="Models\Bid.cs" />
+    <Compile Include="Models\Category.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ItemImage.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RoleActions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -293,6 +299,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804190414043_AuctionItemsAndBids.resx">
       <DependentUpon>201804190414043_AuctionItemsAndBids.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804232025461_AuctionItemImagesAndCategories.resx">
+      <DependentUpon>201804232025461_AuctionItemImagesAndCategories.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
