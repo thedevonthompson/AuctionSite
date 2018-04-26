@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
@@ -19,6 +20,23 @@ namespace AuctionSite.Models
             db.SaveChanges();
         }
 
+        public static List<AuctionItem> GetAllAuctionItems()
+        {
+            return db.AuctionItems.ToList();
+        }
+
+        public static void CreateOrUpdate(AuctionItem a)
+        {
+            if (a.AuctionItemID == null)
+            {
+                Create(a);
+            }
+            else
+            {
+                Update(a);
+            }
+        }
+
         public static AuctionItem GetAuctionItemByID(int id)
         {
             return db.AuctionItems.Where(a => a.AuctionItemID == id).SingleOrDefault();
@@ -26,6 +44,10 @@ namespace AuctionSite.Models
 
         public static void Update(AuctionItem a)
         {
+            if (!a.AuctionItemID.HasValue) { throw new ArgumentException("Auction item has no ID"); }
+            AuctionItem old = GetAuctionItemByID(a.AuctionItemID.Value) ?? throw new ArgumentException("Auction Item with that ID does not exist in the database.");
+            db.Entry(old).State = EntityState.Detached;
+
             db.Entry(a).State = EntityState.Modified;
             db.SaveChanges();
         }

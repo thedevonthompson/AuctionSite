@@ -12,7 +12,7 @@ namespace AuctionSite.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            return View(AuctionItemDB.GetAllAuctionItems());
         }
 
         [HttpGet]
@@ -20,17 +20,21 @@ namespace AuctionSite.Controllers
         {
             if (id.HasValue)
             {
-                return View(AuctionItemDB.GetAuctionItemByID(id.Value));
+                AuctionItem a = AuctionItemDB.GetAuctionItemByID(id.Value);
+                if (a != null)
+                {
+                    return View(a);
+                }
             }
             return View();
         }
 
-        [HttpPut]
-        public ActionResult Create(AuctionItem a)
+        [HttpPost]
+        public ActionResult CreateOrUpdate(AuctionItem a)
         {
             if (ModelState.IsValid)
             {
-                AuctionItemDB.Create(a);
+                AuctionItemDB.CreateOrUpdate(a);
                 return RedirectToAction("Index", "AuctionItem");
             }
             return View(a);
