@@ -211,9 +211,11 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AuctionItem.cs" />
+    <Compile Include="Models\AuctionItemCreateViewModel.cs" />
     <Compile Include="Models\AuctionItemDB.cs" />
     <Compile Include="Models\Bid.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\CategoryDB.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ItemImage.cs" />
     <Compile Include="Models\ManageViewModels.cs" />

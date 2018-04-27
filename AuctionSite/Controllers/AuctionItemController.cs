@@ -9,10 +9,16 @@ namespace AuctionSite.Controllers
 {
     public class AuctionItemController : Controller
     {
+        private static ApplicationDbContext db;
+        static AuctionItemController()
+        {
+            db = new ApplicationDbContext();
+        }
+
         [HttpGet]
         public ActionResult Index()
         {
-            return View(AuctionItemDB.GetAllAuctionItems());
+            return View(AuctionItemDB.GetAllAuctionItems(db));
         }
 
         [HttpGet]
@@ -20,24 +26,28 @@ namespace AuctionSite.Controllers
         {
             if (id.HasValue)
             {
-                AuctionItem a = AuctionItemDB.GetAuctionItemByID(id.Value);
+                AuctionItem a = AuctionItemDB.GetAuctionItemByID(db, id.Value);
                 if (a != null)
                 {
-                    return View(a);
+                    ViewData["CreateOrUpdateText"] = "Update";
+                    var v = new AuctionItemCreateViewModel(a);
+                    return View(v);
                 }
             }
-            return View();
+            ViewData["CreateOrUpdateText"] = "Create";
+            return View(new AuctionItemCreateViewModel());
         }
 
         [HttpPost]
-        public ActionResult CreateOrUpdate(AuctionItem a)
+        public ActionResult CreateOrUpdate(AuctionItemCreateViewModel v)
         {
             if (ModelState.IsValid)
             {
-                AuctionItemDB.CreateOrUpdate(a);
+                var a = new AuctionItem(v, CategoryDB.GetCategoryByID(db, v.SelectedCategory));
+                AuctionItemDB.CreateOrUpdate(db, a);
                 return RedirectToAction("Index", "AuctionItem");
             }
-            return View(a);
+            return View(v);
         }
 
     }

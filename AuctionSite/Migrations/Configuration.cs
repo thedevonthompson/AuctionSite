@@ -31,6 +31,11 @@ namespace AuctionSite.Migrations
             //    );
             //
 
+            context.Categories.AddOrUpdate( c => c.CategoryID,
+                new Category() { CategoryID = 1, Name = "Other" },
+                new Category() { CategoryID = 2, Name = "Book" }
+                );
+
             CreateRoles(context, RoleActions.Admin, RoleActions.Moderator, RoleActions.Member);
             CreateUser(context, RoleActions.Admin, WebConfigurationManager.AppSettings["DefaultAdminUsername"], WebConfigurationManager.AppSettings["DefaultAdminPassword"]);
             CreateUser(context, RoleActions.Moderator, WebConfigurationManager.AppSettings["DefaultModeratorUsername"], WebConfigurationManager.AppSettings["DefaultModeratorPassword"]);

@@ -20,6 +20,9 @@
         <th>
             @Html.DisplayNameFor(model => model.MinPrice)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
         <th></th>
     </tr>
 
@@ -35,8 +38,11 @@
             @Html.DisplayFor(modelItem => item.MinPrice)
         </td>
         <td>
-            @Html.ActionLink("Edit", "CreateOrUpdate", new { id=item.AuctionItemID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.AuctionItemID })
+            @Html.DisplayFor(modelItem => item.Category.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "CreateOrUpdate", new { id = item.AuctionItemID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.AuctionItemID })
         </td>
     </tr>
 }
