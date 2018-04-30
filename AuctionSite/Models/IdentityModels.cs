@@ -35,5 +35,7 @@ namespace AuctionSite.Models
 
         public virtual DbSet<AuctionItem> AuctionItems { get; set; }
         public virtual DbSet<Bid> Bids { get; set; }
+        public virtual DbSet<ItemImage> Images { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
     }
 }
