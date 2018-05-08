@@ -13,17 +13,19 @@ namespace AuctionSite.Models
         public string Description { get; set; }
         public decimal MinPrice { get; set; }
 
+        public virtual ApplicationUser User { get; set; }
         public virtual Category Category { get; set; }
         public virtual ICollection<ItemImage> Images { get; set; }
         public virtual ICollection<Bid> Bids { get; set; }
 
-        public AuctionItem(AuctionItemCreateViewModel v, Category c)
+        public AuctionItem(AuctionItemCreateViewModel v, Category c, ApplicationUser u)
         {
             AuctionItemID = v.AuctionItemID;
             Name = v.Name;
             Description = v.Description;
             MinPrice = v.MinPrice;
 
+            User = u;
             Category = c;
         }
 
