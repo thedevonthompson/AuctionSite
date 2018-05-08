@@ -287,7 +287,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\AuctionItem\Index.cshtml" />
-    <Content Include="Views\AuctionItem\CreateOrUpdate.cshtml" />
     <Content Include="Views\AuctionItem\Create.cshtml" />
     <Content Include="Views\AuctionItem\Update.cshtml" />
   </ItemGroup>
