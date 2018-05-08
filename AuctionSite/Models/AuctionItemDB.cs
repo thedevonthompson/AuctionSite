@@ -16,7 +16,7 @@ namespace AuctionSite.Models
 
         public static List<AuctionItem> GetAllAuctionItems(ApplicationDbContext db)
         {
-            return db.AuctionItems.Include("Category").ToList();
+            return db.AuctionItems.Include("User").Include("Category").ToList();
         }
 
         public static void CreateOrUpdate(ApplicationDbContext db, AuctionItem a)
@@ -33,18 +33,21 @@ namespace AuctionSite.Models
 
         public static AuctionItem GetAuctionItemByID(ApplicationDbContext db, int id)
         {
-            return db.AuctionItems.Where(a => a.AuctionItemID == id).Include("Category").SingleOrDefault();
+            return db.AuctionItems.Where(a => a.AuctionItemID == id).Include("User").Include("Category").SingleOrDefault();
         }
 
-        public static void Update(ApplicationDbContext db, AuctionItem a)
+        public static bool Update(ApplicationDbContext db, AuctionItem a)
         {
-            if (!a.AuctionItemID.HasValue) { throw new ArgumentException("Auction item has no ID"); }
-            AuctionItem old = GetAuctionItemByID(db, a.AuctionItemID.Value) ?? throw new ArgumentException("Auction Item with that ID does not exist in the database.");
-            db.Entry(old).State = EntityState.Detached;
-
-            //a.Category = db.Categories.Where(c => c.CategoryID == a.Category.CategoryID).SingleOrDefault();
-            db.Entry(a).State = EntityState.Modified;
-            db.SaveChanges();
+            // Check that an item with the given id and corresponding user id exists.
+            // This is to prevent a user from editing another user's item.
+            if (db.AuctionItems.Where(i => i.AuctionItemID == a.AuctionItemID && i.User.Id == a.User.Id).Count() == 1)
+            {
+                db.AuctionItems.Attach(a);
+                db.Entry(a).State = EntityState.Modified;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
         public static void Delete(ApplicationDbContext db, AuctionItem a)

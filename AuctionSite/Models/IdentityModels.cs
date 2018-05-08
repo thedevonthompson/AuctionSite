@@ -18,7 +18,8 @@ namespace AuctionSite.Models
             return userIdentity;
         }
 
-        public ICollection<Bid> Bids { get; set; }
+        public virtual ICollection<Bid> Bids { get; set; }
+        public virtual ICollection<AuctionItem> Items { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
