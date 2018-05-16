@@ -36,7 +36,24 @@ namespace AuctionSite.Controllers
         {
             if (ModelState.IsValid)
             {
-                var a = new AuctionItem(v, CategoryDB.GetCategoryByID(db, v.SelectedCategory), ApplicationUserDB.GetUserByID(db, User.Identity.GetUserId()));
+
+                List<ItemImage> images = new List<ItemImage>();
+
+                for (int i = 0; i < Request.Files.Count; i++)
+                {
+                    HttpPostedFileBase img = Request.Files[i];
+
+                    if (img.ContentLength > 0 && img.ContentLength <= 4194304 && 
+                        ( img.ContentType == "image/gif" || img.ContentType == "image/jpeg" || img.ContentType == "image/png") )
+                    {
+                        byte[] imgContent = new byte[img.ContentLength];
+                        img.InputStream.Position = 0;
+                        img.InputStream.Read(imgContent, 0, img.ContentLength);
+                        images.Add(new ItemImage(imgContent));
+                    }
+                }
+
+                var a = new AuctionItem(v, CategoryDB.GetCategoryByID(db, v.SelectedCategory), ApplicationUserDB.GetUserByID(db, User.Identity.GetUserId()), images);
                 AuctionItemDB.Create(db, a);
                 return RedirectToAction("Index", "AuctionItem");
             }

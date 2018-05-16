@@ -19,6 +19,9 @@ namespace AuctionSite.Models
         public virtual ICollection<Bid> Bids { get; set; }
 
         public AuctionItem(AuctionItemCreateViewModel v, Category c, ApplicationUser u)
+        : this(v, c, u, null) {}
+
+        public AuctionItem(AuctionItemCreateViewModel v, Category c, ApplicationUser u, ICollection<ItemImage> imgs)
         {
             AuctionItemID = v.AuctionItemID;
             Name = v.Name;
@@ -27,6 +30,7 @@ namespace AuctionSite.Models
 
             User = u;
             Category = c;
+            Images = imgs;
         }
 
         private AuctionItem() { }
