@@ -31,6 +31,7 @@ namespace AuctionSite.Models
         public AuctionItemCreateViewModel()
         {
             Categories = new SelectList(CategoryDB.GetAllCategories(new ApplicationDbContext()), "CategoryID", "Name");
+            Images = new List<ItemImage>();
         }
     }
 }

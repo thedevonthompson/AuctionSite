@@ -16,7 +16,7 @@ namespace AuctionSite.Models
 
         public static List<AuctionItem> GetAllAuctionItems(ApplicationDbContext db)
         {
-            return db.AuctionItems.Include("User").Include("Category").ToList();
+            return db.AuctionItems.Include("User").Include("Category").Include("Images").ToList();
         }
 
         public static void CreateOrUpdate(ApplicationDbContext db, AuctionItem a)
@@ -33,7 +33,7 @@ namespace AuctionSite.Models
 
         public static AuctionItem GetAuctionItemByID(ApplicationDbContext db, int id)
         {
-            return db.AuctionItems.Where(a => a.AuctionItemID == id).Include("User").Include("Category").SingleOrDefault();
+            return db.AuctionItems.Where(a => a.AuctionItemID == id).Include("User").Include("Category").Include("Images").SingleOrDefault();
         }
 
         public static bool Update(ApplicationDbContext db, AuctionItem a)
