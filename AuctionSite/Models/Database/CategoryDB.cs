@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AuctionSite.Models
+namespace AuctionSite.Models.Database
 {
     public class CategoryDB
     {

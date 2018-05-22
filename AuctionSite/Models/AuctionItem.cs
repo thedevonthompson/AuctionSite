@@ -12,6 +12,7 @@ namespace AuctionSite.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal MinPrice { get; set; }
+        public DateTime EndDateTime { get; set; }
 
         public virtual ApplicationUser User { get; set; }
         public virtual Category Category { get; set; }
@@ -27,6 +28,7 @@ namespace AuctionSite.Models
             Name = v.Name;
             Description = v.Description;
             MinPrice = v.MinPrice;
+            EndDateTime = v.EndDateTime;
 
             User = u;
             Category = c;

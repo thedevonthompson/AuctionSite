@@ -16,5 +16,14 @@ namespace AuctionSite.Models
         public int AuctionItemID { get; set; }
 
         public decimal Price { get; set; }
+
+        private Bid() {}
+
+        public Bid(string userID, int itemID, decimal price)
+        {
+            ApplicationUserID = userID;
+            AuctionItemID = itemID;
+            Price = price;
+        }
     }
 }
