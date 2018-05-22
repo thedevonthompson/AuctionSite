@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AuctionSite.Models.Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,6 +13,7 @@ namespace AuctionSite.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal MinPrice { get; set; }
+        public DateTime EndDateTime { get; set; }
 
         public int SelectedCategory { get; set; }
         public IEnumerable<SelectListItem> Categories { get; set; }
@@ -23,6 +25,7 @@ namespace AuctionSite.Models
             Name = a.Name;
             Description = a.Description;
             MinPrice = a.MinPrice;
+            EndDateTime = a.EndDateTime;
 
             SelectedCategory = a.Category.CategoryID;
             Images = a.Images;
@@ -32,6 +35,7 @@ namespace AuctionSite.Models
         {
             Categories = new SelectList(CategoryDB.GetAllCategories(new ApplicationDbContext()), "CategoryID", "Name");
             Images = new List<ItemImage>();
+            EndDateTime = DateTime.Now;
         }
     }
 }

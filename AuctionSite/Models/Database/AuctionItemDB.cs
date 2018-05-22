@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
-namespace AuctionSite.Models
+namespace AuctionSite.Models.Database
 {
     public class AuctionItemDB
     {

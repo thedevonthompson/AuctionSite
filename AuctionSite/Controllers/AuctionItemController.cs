@@ -1,4 +1,5 @@
 ﻿using AuctionSite.Models;
+using AuctionSite.Models.Database;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,26 @@ namespace AuctionSite.Controllers
             return View(AuctionItemDB.GetAllAuctionItems(db));
         }
 
+        [HttpPost]
+        public ActionResult Bid(int? AuctionItemID, decimal amount)
+        {
+            if (AuctionItemID.HasValue)
+            {
+                AuctionItem a = AuctionItemDB.GetAuctionItemByID(db, AuctionItemID.Value);
+                if (a != null)
+                {
+                    if (a.User.Id == User.Identity.GetUserId() || amount < a.MinPrice)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+
+                    BidDB.Create(db, new Bid(User.Identity.GetUserId(), AuctionItemID.Value, amount));
+                    return RedirectToAction("Details", new { id = a.AuctionItemID });
+                }
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+        }
+
         [HttpGet]
         public ActionResult Create()
         {
@@ -34,9 +55,13 @@ namespace AuctionSite.Controllers
         [HttpPost]
         public ActionResult Create(AuctionItemCreateViewModel v)
         {
-            if (ModelState.IsValid)
-            {
+            DateTime minDate = DateTime.Now;
+            DateTime maxDate = minDate.AddDays(7);
 
+            bool isEndDateValid = v.EndDateTime > minDate && v.EndDateTime < maxDate;
+
+            if (ModelState.IsValid && isEndDateValid)
+            {
                 List<ItemImage> images = new List<ItemImage>();
 
                 for (int i = 0; i < Request.Files.Count; i++)
@@ -57,7 +82,28 @@ namespace AuctionSite.Controllers
                 AuctionItemDB.Create(db, a);
                 return RedirectToAction("Index", "AuctionItem");
             }
+
+            if (!isEndDateValid)
+            {
+                ModelState.AddModelError("EndDateTime", $"Auction item end time must be between {minDate} and {maxDate}");
+            }
+
             return View(v);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult Details(int? id)
+        {
+            if (id.HasValue)
+            {
+                AuctionItem a = AuctionItemDB.GetAuctionItemByID(db, id.Value);
+                if (a != null)
+                {
+                    return View(a);
+                }
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.NotFound);
         }
 
         [HttpGet]
