@@ -42,6 +42,17 @@
             @Html.DisplayFor(model => model.EndDateTime)
         </dd>
 
+        <dt>
+            Images
+        </dt>
+
+        <dd>
+            @foreach (var img in Model.Images)
+            {
+                <img src="@img.Path" height="80" />
+            }
+        </dd>
+
     </dl>
 </div>
 <div>

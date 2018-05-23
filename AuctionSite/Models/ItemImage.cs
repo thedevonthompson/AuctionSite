@@ -8,13 +8,13 @@ namespace AuctionSite.Models
     public class ItemImage
     {
         public int ItemImageID  { get; set; }
-        public byte[] Data { get; set; }
+        public string Path { get; set; }
 
         private ItemImage() {}
 
-        public ItemImage(byte[] data)
+        public ItemImage(string path)
         {
-            Data = data;
+            Path = path;
         }
     }
 }
