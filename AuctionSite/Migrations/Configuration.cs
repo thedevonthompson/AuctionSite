@@ -32,9 +32,17 @@ namespace AuctionSite.Migrations
             //
 
             context.Categories.AddOrUpdate( c => c.CategoryID,
-                new Category() { CategoryID = 1, Name = "Other" },
-                new Category() { CategoryID = 2, Name = "Book" }
-                );
+                new Category() { CategoryID = 1, Name = "Automotive" },
+                new Category() { CategoryID = 2, Name = "Beauty" },
+                new Category() { CategoryID = 3, Name = "Books" },
+                new Category() { CategoryID = 4, Name = "Electronics" },
+                new Category() { CategoryID = 5, Name = "Health" },
+                new Category() { CategoryID = 6, Name = "Home" },
+                new Category() { CategoryID = 7, Name = "Movies" },
+                new Category() { CategoryID = 8, Name = "Music" },
+                new Category() { CategoryID = 9, Name = "Sports" },
+                new Category() { CategoryID = 10, Name = "Other" }
+            );
 
             CreateRoles(context, RoleActions.Admin, RoleActions.Moderator, RoleActions.Member);
             CreateUser(context, RoleActions.Admin, WebConfigurationManager.AppSettings["DefaultAdminUsername"], WebConfigurationManager.AppSettings["DefaultAdminPassword"]);
