@@ -327,6 +327,7 @@
     <Content Include="Views\AuctionItem\Update.cshtml" />
     <Content Include="Views\Shared\_ImageInputScript.cshtml" />
     <Content Include="Views\AuctionItem\Details.cshtml" />
+    <Content Include="Views\Shared\_AuctionItemList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

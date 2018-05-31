@@ -1,0 +1,21 @@
+﻿@model IEnumerable<AuctionSite.Models.AuctionItem>
+
+@if (Model != null)
+{
+    for (int i = 0; i < Math.Ceiling(Model.Count() / 4.0); i++)
+    {
+        <div class="row">
+            @for (int j = i * 4; j < Model.Count() && j < i * 4 + 4; j++)
+            {
+                <div class="col-md-3">
+                    <figure>
+                        <a href="@Url.Action("Details", "AuctionItem", new { id = Model.ElementAt(j).AuctionItemID })">
+                            <img src="@Model.ElementAt(j).Images.FirstOrDefault().Path" style="max-height: 285px;" />
+                        </a>
+                        <figcaption>@Model.ElementAt(j).Name - Expires: @Model.ElementAt(j).EndDateTime.ToShortDateString() @Model.ElementAt(j).EndDateTime.ToShortTimeString()</figcaption>
+                    </figure>
+                </div>
+            }
+        </div>
+    }
+}
