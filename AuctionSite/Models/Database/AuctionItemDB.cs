@@ -16,7 +16,30 @@ namespace AuctionSite.Models.Database
 
         public static List<AuctionItem> GetAllAuctionItems(ApplicationDbContext db)
         {
-            return db.AuctionItems.Include("User").Include("Category").Include("Images").ToList();
+            return db.AuctionItems
+                .Where(i => i.EndDateTime > DateTime.Now)
+                .Include("User").Include("Category").Include("Images")
+                .ToList();
+        }
+
+        public static List<AuctionItem> GetAllAuctionItems(ApplicationDbContext db, int offset, int size)
+        {
+            return db.AuctionItems
+                .Where(i => i.EndDateTime > DateTime.Now)
+                .Include("User").Include("Category").Include("Images")
+                .Skip(offset)
+                .Take(size)
+                .ToList();
+        }
+
+        public static List<AuctionItem> GetFeaturedAuctionItems(ApplicationDbContext db)
+        {
+            return db.AuctionItems
+                .Where(i => i.EndDateTime > DateTime.Now)
+                .Include("User").Include("Category").Include("Images")
+                .OrderBy(i => i.EndDateTime)
+                .Take(8)
+                .ToList();
         }
 
         public static void CreateOrUpdate(ApplicationDbContext db, AuctionItem a)

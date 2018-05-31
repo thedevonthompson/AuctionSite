@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AuctionSite.Models;
+using AuctionSite.Models.Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +10,26 @@ namespace AuctionSite.Controllers
 {
     public class HomeController : Controller
     {
+
+        private ApplicationDbContext db;
+        public HomeController()
+        {
+            db = new ApplicationDbContext();
+        }
+
         public ActionResult Index()
         {
-            return View();
+            List<AuctionItem> items = AuctionItemDB.GetFeaturedAuctionItems(db);
+
+            foreach (var item in items)
+            {
+                if (item.Images.Count < 1)
+                {
+                    item.Images.Add(ItemImage.DefaultImage());
+                }
+            }
+
+            return View(items);
         }
 
         public ActionResult About()

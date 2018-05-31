@@ -23,7 +23,17 @@ namespace AuctionSite.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            return View(AuctionItemDB.GetAllAuctionItems(db));
+            List<AuctionItem> items = AuctionItemDB.GetAllAuctionItems(db);
+
+            foreach (var item in items)
+            {
+                if (item.Images.Count < 1)
+                {
+                    item.Images.Add(ItemImage.DefaultImage());
+                }
+            }
+
+            return View(items);
         }
 
         [HttpPost]
