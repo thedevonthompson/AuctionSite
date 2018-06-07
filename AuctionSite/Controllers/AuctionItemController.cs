@@ -143,5 +143,11 @@ namespace AuctionSite.Controllers
             return View(v);
         }
 
+        [HttpGet]
+        public ActionResult ViewBids()
+        {
+            return View(BidDB.GetBidsByUserID(db, User.Identity.GetUserId()));
+        }
+
     }
 }

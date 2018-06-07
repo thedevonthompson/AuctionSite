@@ -13,5 +13,10 @@ namespace AuctionSite.Models.Database
             db.Bids.Add(b);
             db.SaveChanges();
         }
+
+        public static List<Bid> GetBidsByUserID(ApplicationDbContext db, string userID)
+        {
+            return db.Bids.Where(b => b.ApplicationUserID == userID).ToList();
+        }
     }
 }
