@@ -26,10 +26,4 @@ namespace AuctionSite.Models
             Price = price;
         }
     }
-
-
-    public class BidViewModel
-    {
-        public 
-    }
 }

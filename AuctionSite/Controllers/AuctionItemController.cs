@@ -49,7 +49,7 @@ namespace AuctionSite.Controllers
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     }
 
-                    BidDB.Create(db, new Bid(User.Identity.GetUserId(), AuctionItemID.Value, amount));
+                    BidDB.CreateOrUpdate(db, new Bid(User.Identity.GetUserId(), AuctionItemID.Value, amount));
                     return RedirectToAction("Details", new { id = a.AuctionItemID });
                 }
             }
@@ -146,7 +146,15 @@ namespace AuctionSite.Controllers
         [HttpGet]
         public ActionResult ViewBids()
         {
-            return View(BidDB.GetBidsByUserID(db, User.Identity.GetUserId()));
+            List<AuctionItem> items = AuctionItemDB.GetUserBiddedAuctionItems(db, User.Identity.GetUserId());
+            var viewItems = new List<AuctionItemBidViewModel>();
+
+            foreach (AuctionItem i in items)
+            {
+                viewItems.Add(new AuctionItemBidViewModel(i, AuctionItemBidViewModel.GetBidByUserID(i.Bids, User.Identity.GetUserId())));
+            }
+
+            return View(viewItems);
         }
 
     }
