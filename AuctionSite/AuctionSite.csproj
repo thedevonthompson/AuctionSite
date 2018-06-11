@@ -244,6 +244,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AuctionItemBidViewModel.cs" />
     <Compile Include="Models\BlobStorageHelper.cs" />
     <Compile Include="Models\Database\ApplicationUserDB.cs" />
     <Compile Include="Models\AuctionItem.cs" />
@@ -328,6 +329,7 @@
     <Content Include="Views\Shared\_ImageInputScript.cshtml" />
     <Content Include="Views\AuctionItem\Details.cshtml" />
     <Content Include="Views\Shared\_AuctionItemList.cshtml" />
+    <Content Include="Views\AuctionItem\ViewBids.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

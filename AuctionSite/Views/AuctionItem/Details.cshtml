@@ -1,4 +1,6 @@
-﻿@model AuctionSite.Models.AuctionItem
+﻿@using Microsoft.AspNet.Identity;
+
+@model AuctionSite.Models.AuctionItem
 
 @{
     ViewBag.Title = "Auction Details";
@@ -54,6 +56,9 @@
 
     </dl>
 </div>
+
+@if (!Model.User.Id.Equals(User.Identity.GetUserId()))
+{
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -74,8 +79,11 @@
 
     </dl>
 </div>
-
+}
 <p>
-    @Html.ActionLink("Edit", "Update", new { id = Model.AuctionItemID }) |
+    @if (Model.User.Id.Equals(User.Identity.GetUserId()))
+    {
+        @Html.ActionLink("Edit", "Update", new { id = Model.AuctionItemID })<text> | </text>
+    }
     @Html.ActionLink("Back to List", "Index")
 </p>

@@ -49,7 +49,7 @@ namespace AuctionSite.Controllers
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     }
 
-                    BidDB.Create(db, new Bid(User.Identity.GetUserId(), AuctionItemID.Value, amount));
+                    BidDB.CreateOrUpdate(db, new Bid(User.Identity.GetUserId(), AuctionItemID.Value, amount));
                     return RedirectToAction("Details", new { id = a.AuctionItemID });
                 }
             }
@@ -141,6 +141,20 @@ namespace AuctionSite.Controllers
                 ModelState.AddModelError("UpdateFailed", "Currently logged in user is not the owner of this item.");
             }
             return View(v);
+        }
+
+        [HttpGet]
+        public ActionResult ViewBids()
+        {
+            List<AuctionItem> items = AuctionItemDB.GetUserBiddedAuctionItems(db, User.Identity.GetUserId());
+            var viewItems = new List<AuctionItemBidViewModel>();
+
+            foreach (AuctionItem i in items)
+            {
+                viewItems.Add(new AuctionItemBidViewModel(i, AuctionItemBidViewModel.GetBidByUserID(i.Bids, User.Identity.GetUserId())));
+            }
+
+            return View(viewItems);
         }
 
     }

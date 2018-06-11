@@ -5,7 +5,9 @@
 }
 <br />
 <p>
-    @Html.ActionLink("Create New Auction", "Create")
+    @Html.ActionLink("Create New Auction", "Create", new { }, new { @class = "btn btn-success" })
+    @Html.ActionLink("View Bids", "ViewBids", new { }, new { @class = "btn btn-default" })
 </p>
+<hr />
 
 @Html.Partial("_AuctionItemList")

@@ -32,6 +32,11 @@ namespace AuctionSite.Models.Database
                 .ToList();
         }
 
+        public static AuctionItem GetAuctionItemByID(ApplicationDbContext db, int id)
+        {
+            return db.AuctionItems.Where(a => a.AuctionItemID == id).Include("User").Include("Category").Include("Images").SingleOrDefault();
+        }
+
         public static List<AuctionItem> GetFeaturedAuctionItems(ApplicationDbContext db)
         {
             return db.AuctionItems
@@ -39,6 +44,16 @@ namespace AuctionSite.Models.Database
                 .Include("User").Include("Category").Include("Images")
                 .OrderBy(i => i.EndDateTime)
                 .Take(8)
+                .ToList();
+        }
+
+        public static List<AuctionItem> GetUserBiddedAuctionItems(ApplicationDbContext db, string userID)
+        {
+            return db.AuctionItems
+                .Join(db.Bids, i => i.AuctionItemID, b => b.AuctionItemID, (i, b) => new { Item = i, Bid = b })
+                .Where(ib => ib.Bid.ApplicationUserID == userID)
+                .Select(ib => ib.Item)
+                .Include("Bids")
                 .ToList();
         }
 
@@ -52,11 +67,6 @@ namespace AuctionSite.Models.Database
             {
                 Update(db, a);
             }
-        }
-
-        public static AuctionItem GetAuctionItemByID(ApplicationDbContext db, int id)
-        {
-            return db.AuctionItems.Where(a => a.AuctionItemID == id).Include("User").Include("Category").Include("Images").SingleOrDefault();
         }
 
         public static bool Update(ApplicationDbContext db, AuctionItem a)
